@@ -6,7 +6,7 @@ defmodule BusiApi.Accounts do
   import Ecto.Query, warn: false
   alias BusiApi.Repo
 
-  alias BusiApi.Accounts.Admins
+  alias BusiApi.Accounts.Admin
 
   @doc """
   Returns the list of admins.
@@ -14,91 +14,101 @@ defmodule BusiApi.Accounts do
   ## Examples
 
       iex> list_admins()
-      [%Admins{}, ...]
+      [%Admin{}, ...]
 
   """
   def list_admins do
-    Repo.all(Admins)
+    Repo.all(Admin)
   end
 
   @doc """
-  Gets a single admins.
+  Gets a single admin.
 
-  Raises `Ecto.NoResultsError` if the Admins does not exist.
+  Raises `Ecto.NoResultsError` if the Admin does not exist.
 
   ## Examples
 
-      iex> get_admins!(123)
-      %Admins{}
+      iex> get_admin!(123)
+      %Admin{}
 
-      iex> get_admins!(456)
+      iex> get_admin!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_admins!(id), do: Repo.get!(Admins, id)
+  def get_admin!(id), do: Repo.get!(Admin, id)
 
   @doc """
-  Creates a admins.
+  Creates a admin.
 
   ## Examples
 
-      iex> create_admins(%{field: value})
-      {:ok, %Admins{}}
+      iex> create_admin(%{field: value})
+      {:ok, %Admin{}}
 
-      iex> create_admins(%{field: bad_value})
+      iex> create_admin(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_admins(attrs \\ %{}) do
-    %Admins{}
-    |> Admins.changeset(attrs)
+  def create_admin(attrs \\ %{}) do
+    %Admin{}
+    |> Admin.changeset(attrs)
     |> Repo.insert()
   end
 
   @doc """
-  Updates a admins.
+  Updates a admin.
 
   ## Examples
 
-      iex> update_admins(admins, %{field: new_value})
-      {:ok, %Admins{}}
+      iex> update_admin(admin, %{field: new_value})
+      {:ok, %Admin{}}
 
-      iex> update_admins(admins, %{field: bad_value})
+      iex> update_admin(admin, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_admins(%Admins{} = admins, attrs) do
-    admins
-    |> Admins.changeset(attrs)
+  def update_admin(%Admin{} = admin, attrs) do
+    admin
+    |> Admin.changeset(attrs)
     |> Repo.update()
   end
 
   @doc """
-  Deletes a admins.
+  Deletes a admin.
 
   ## Examples
 
-      iex> delete_admins(admins)
-      {:ok, %Admins{}}
+      iex> delete_admin(admin)
+      {:ok, %Admin{}}
 
-      iex> delete_admins(admins)
+      iex> delete_admin(admin)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_admins(%Admins{} = admins) do
-    Repo.delete(admins)
+  def delete_admin(%Admin{} = admin) do
+    Repo.delete(admin)
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking admins changes.
+  Returns an `%Ecto.Changeset{}` for tracking admin changes.
 
   ## Examples
 
-      iex> change_admins(admins)
-      %Ecto.Changeset{data: %Admins{}}
+      iex> change_admin(admin)
+      %Ecto.Changeset{data: %Admin{}}
 
   """
-  def change_admins(%Admins{} = admins, attrs \\ %{}) do
-    Admins.changeset(admins, attrs)
+  def change_admin(%Admin{} = admin, attrs \\ %{}) do
+    Admin.changeset(admin, attrs)
+  end
+
+  def get_by_email(email) do
+    case Repo.get_by(Admin, email: email) do
+      nil ->
+        {:error, :not_found}
+
+      admin ->
+        {:ok, admin}
+    end
   end
 end

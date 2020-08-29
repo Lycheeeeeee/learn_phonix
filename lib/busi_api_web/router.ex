@@ -7,7 +7,17 @@ defmodule BusiApiWeb.Router do
 
   scope "/api", BusiApiWeb do
     pipe_through :api
+    post "/admins/signup", AdminController, :create
+    post "/admins/signin", AdminController, :signin
+  end
+
+  scope "/api", BusiApiWeb do
+    pipe_through [:api, :auth]
     resources "/users", UserController, except: [:new, :edit]
+  end
+
+  pipeline :auth do
+    plug BusiApiWeb.Auth.Pipeline
   end
 
   # Enables LiveDashboard only for development

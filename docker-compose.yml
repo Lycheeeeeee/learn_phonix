@@ -1,29 +1,20 @@
-version: '3.1'
-
+version: "3.7"
 services:
-
-  db:
-    image: postgres:10.4
-    restart: always
+  
+  naru_db:
+    image: postgres:11.5
+    container_name: naru_postgres
     environment:
-      POSTGRES_PASSWORD: example
-      POSTGRES_DB: go-ex
-
-    ports:
-      - 5439:5432
-
-  db-test:
-    image: postgres:10.4
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: example
-      POSTGRES_DB: test
-
+      - POSTGRES_DB=naru_local
+      - POSTGRES_PASSWORD=postgres
     ports:
       - 5432:5432
-
-  adminer:
-    image: adminer
-    restart: always
+  naru_db_test:
+    image: postgres:11.5
+    container_name: naru_postgres_test
+    environment:
+      - POSTGRES_DB=naru_test
+      - POSTGRES_PASSWORD=adminpw
+      - POSTGRES_USER=admin
     ports:
-      - 8080:8080
+      - 5433:5432

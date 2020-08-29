@@ -18,6 +18,11 @@ config :busi_api, BusiApiWeb.Endpoint,
   pubsub_server: BusiApi.PubSub,
   live_view: [signing_salt: "dxEMRWHP"]
 
+# Configures Elixir's Authentication
+config :busi_api, BusiApiWeb.Auth.Guardian,
+  issuer: "busi_api",
+  secret_key: "WB8JajV7Bsb+jE6WbDghYj2tOBfJ7i3IlgABphKhSF5/8KHIgx5iMw5yxXASVrlX"
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

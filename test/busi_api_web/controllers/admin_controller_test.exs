@@ -1,8 +1,8 @@
-defmodule BusiApiWeb.AdminsControllerTest do
+defmodule BusiApiWeb.AdminControllerTest do
   use BusiApiWeb.ConnCase
 
   alias BusiApi.Accounts
-  alias BusiApi.Accounts.Admins
+  alias BusiApi.Accounts.Admin
 
   @create_attrs %{
     email: "some email",
@@ -14,9 +14,9 @@ defmodule BusiApiWeb.AdminsControllerTest do
   }
   @invalid_attrs %{email: nil, encrypted_password: nil}
 
-  def fixture(:admins) do
-    {:ok, admins} = Accounts.create_admins(@create_attrs)
-    admins
+  def fixture(:admin) do
+    {:ok, admin} = Accounts.create_admin(@create_attrs)
+    admin
   end
 
   setup %{conn: conn} do
@@ -25,17 +25,17 @@ defmodule BusiApiWeb.AdminsControllerTest do
 
   describe "index" do
     test "lists all admins", %{conn: conn} do
-      conn = get(conn, Routes.admins_path(conn, :index))
+      conn = get(conn, Routes.admin_path(conn, :index))
       assert json_response(conn, 200)["data"] == []
     end
   end
 
-  describe "create admins" do
-    test "renders admins when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.admins_path(conn, :create), admins: @create_attrs)
+  describe "create admin" do
+    test "renders admin when data is valid", %{conn: conn} do
+      conn = post(conn, Routes.admin_path(conn, :create), admin: @create_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
-      conn = get(conn, Routes.admins_path(conn, :show, id))
+      conn = get(conn, Routes.admin_path(conn, :show, id))
 
       assert %{
                "id" => id,
@@ -45,19 +45,19 @@ defmodule BusiApiWeb.AdminsControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.admins_path(conn, :create), admins: @invalid_attrs)
+      conn = post(conn, Routes.admin_path(conn, :create), admin: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
 
-  describe "update admins" do
-    setup [:create_admins]
+  describe "update admin" do
+    setup [:create_admin]
 
-    test "renders admins when data is valid", %{conn: conn, admins: %Admins{id: id} = admins} do
-      conn = put(conn, Routes.admins_path(conn, :update, admins), admins: @update_attrs)
+    test "renders admin when data is valid", %{conn: conn, admin: %Admin{id: id} = admin} do
+      conn = put(conn, Routes.admin_path(conn, :update, admin), admin: @update_attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
-      conn = get(conn, Routes.admins_path(conn, :show, id))
+      conn = get(conn, Routes.admin_path(conn, :show, id))
 
       assert %{
                "id" => id,
@@ -66,27 +66,27 @@ defmodule BusiApiWeb.AdminsControllerTest do
              } = json_response(conn, 200)["data"]
     end
 
-    test "renders errors when data is invalid", %{conn: conn, admins: admins} do
-      conn = put(conn, Routes.admins_path(conn, :update, admins), admins: @invalid_attrs)
+    test "renders errors when data is invalid", %{conn: conn, admin: admin} do
+      conn = put(conn, Routes.admin_path(conn, :update, admin), admin: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
 
-  describe "delete admins" do
-    setup [:create_admins]
+  describe "delete admin" do
+    setup [:create_admin]
 
-    test "deletes chosen admins", %{conn: conn, admins: admins} do
-      conn = delete(conn, Routes.admins_path(conn, :delete, admins))
+    test "deletes chosen admin", %{conn: conn, admin: admin} do
+      conn = delete(conn, Routes.admin_path(conn, :delete, admin))
       assert response(conn, 204)
 
       assert_error_sent 404, fn ->
-        get(conn, Routes.admins_path(conn, :show, admins))
+        get(conn, Routes.admin_path(conn, :show, admin))
       end
     end
   end
 
-  defp create_admins(_) do
-    admins = fixture(:admins)
-    %{admins: admins}
+  defp create_admin(_) do
+    admin = fixture(:admin)
+    %{admin: admin}
   end
 end
