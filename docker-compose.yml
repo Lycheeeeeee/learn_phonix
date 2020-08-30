@@ -1,20 +1,20 @@
 version: "3.7"
 services:
   
-  naru_db:
+  db:
     image: postgres:11.5
-    container_name: naru_postgres
+    container_name: dev_postgres
     environment:
-      - POSTGRES_DB=naru_local
+      - POSTGRES_DB=dev_local
       - POSTGRES_PASSWORD=postgres
     ports:
       - 5432:5432
-  naru_db_test:
+  db_test:
     image: postgres:11.5
-    container_name: naru_postgres_test
+    container_name: test_postgres
     environment:
-      - POSTGRES_DB=naru_test
-      - POSTGRES_PASSWORD=adminpw
+      - POSTGRES_DB=dev_test
+      - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=admin
     ports:
       - 5433:5432

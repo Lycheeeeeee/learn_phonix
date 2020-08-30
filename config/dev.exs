@@ -3,8 +3,8 @@ use Mix.Config
 # Configure your database
 config :busi_api, BusiApi.Repo,
   username: "postgres",
-  password: "example",
-  database: "test",
+  password: "postgres",
+  database: "dev_local",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
